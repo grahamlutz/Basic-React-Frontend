@@ -18,7 +18,7 @@ var Router = router.Router;
 var browserHistory = router.browserHistory;
 
 // Reference the high-level components
-// var Main = require("../components/Main");
+var Main = require("../components/Main");
 // var Search = require("../components/Search");
 // var Saved = require("../components/Saved");
 

@@ -1,41 +1,73 @@
-// Inclue the React library
-var React = require("react");
+import React from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
-// Include the react-router module
-var router = require("react-router");
+import Main from '../components/Main';
 
-// Include the Route component
-var Route = router.Route;
+const Home = () => (
+  <div>
+    <h2>Home</h2>
+  </div>
+)
 
-//  Include the IndexRoute (catch-all route)
-var IndexRoute = router.IndexRoute;
+const About = () => (
+  <div>
+    <h2>About</h2>
+  </div>
+)
 
-// Include the Router component
-var Router = router.Router;
+const Topic = ({ match }) => (
+  <div>
+    <h3>{match.params.topicId}</h3>
+  </div>
+)
 
-// Include the browserHistory prop to configure client side routing
-// https://github.com/ReactTraining/react-router/blob/master/docs/guides/Histories.md#browserhistory
-var browserHistory = router.browserHistory;
+const Topics = ({ match }) => (
+  <div>
+    <h2>Topics</h2>
+    <ul>
+      <li>
+        <Link to={`${match.url}/rendering`}>
+          Rendering with React
+        </Link>
+      </li>
+      <li>
+        <Link to={`${match.url}/components`}>
+          Components
+        </Link>
+      </li>
+      <li>
+        <Link to={`${match.url}/props-v-state`}>
+          Props v. State
+        </Link>
+      </li>
+    </ul>
 
-// Reference the high-level components
-var Main = require("../components/Main");
-// var Search = require("../components/Search");
-// var Saved = require("../components/Saved");
+    <Route path={`${match.url}/:topicId`} component={Topic}/>
+    <Route exact path={match.url} render={() => (
+      <h3>Please select a topic.</h3>
+    )}/>
+  </div>
+)
 
-
-// Export the Routes
 module.exports = (
-  // High level component is the Router component.
-  <Router history={browserHistory}>
-    <Route path="/" component={Main}>
+  <Router>
+    <div>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/topics">Topics</Link></li>
+      </ul>
 
-      {/* If user selects Search or Saved show the appropriate component */}
-      {/*<Route path="Search" component={Search} />*/}
-      {/*<Route path="Saved" component={Saved} />*/}
+      <hr/>
 
-      {/* If user selects any other path... we get the Home Route */}
-      {/*<IndexRoute component={Search} />*/}
-
-    </Route>
+      <Route exact path="/" component={Home}/>
+      <Route path="/about" component={About}/>
+      <Route path="/topics" component={Topics}/>
+    </div>
   </Router>
-);
+)
+// export default BasicExample
